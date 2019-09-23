@@ -31,12 +31,46 @@ export const loginUser = (loginData) => {
       .then(resp => resp.json())
   }
 
-// export const verifyUser = async () => {
-//     const token = localStorage.getItem('authToken');
-//     if (token) {
-//         api.defaults.headers.common.authorization = `Bearer ${token}`
-//         const resp = await api.get('/users/verify');
-//         return resp.data
-//     }
-//     return false;
-// }
+  const createNote = (data) => {
+    const opts = {
+      method: 'POST',
+     
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      
+    }
+    return fetch(`${baseUrl}/notes`, opts)
+      .then(resp => resp.json())
+  }
+  
+
+  const readAllNotes = async () => {
+  
+  
+    const resp = await api.get(`/notes`)
+     
+    
+    return resp.data  
+  }
+
+  const updateNote = async (id, data) => {
+    const resp = await api.put(`/notes/${id}`, { note: data })
+    return resp.data
+  }
+  
+  const destroyNote = async (id) => {
+    const resp = await api.delete(`/notes/${id}`)
+    return resp.data
+  
+  }
+
+
+  export {
+    createNote,
+     readAllNotes,
+    
+     updateNote,
+     destroyNote
+  } 
